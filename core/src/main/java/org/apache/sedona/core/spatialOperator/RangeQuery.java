@@ -19,17 +19,28 @@
 
 package org.apache.sedona.core.spatialOperator;
 
+import org.apache.commons.lang3.tuple.Pair;
 import org.apache.sedona.core.rangeJudgement.RangeFilter;
 import org.apache.sedona.core.rangeJudgement.RangeFilterUsingIndex;
+import org.apache.sedona.core.spatialLocalIndex.SpatialLocalIndex;
+import org.apache.sedona.core.spatialLocalIndex.SpatialLocalIndex.QueryMethod;
+import org.apache.sedona.core.spatialOperator.rangeQuery.*;
 import org.apache.sedona.core.spatialRDD.SpatialRDD;
 import org.apache.sedona.core.utils.CRSTransformation;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
+import org.apache.spark.api.java.function.FlatMapFunction2;
+import org.apache.spark.api.java.function.Function2;
+import org.apache.spark.api.java.function.PairFunction;
 import org.locationtech.jts.geom.Coordinate;
 import org.locationtech.jts.geom.Envelope;
 import org.locationtech.jts.geom.Geometry;
 import org.locationtech.jts.geom.GeometryFactory;
+import scala.Tuple2;
 
 import java.io.Serializable;
+import java.util.Iterator;
+import java.util.List;
 
 // TODO: Auto-generated Javadoc
 
@@ -39,6 +50,84 @@ import java.io.Serializable;
 public class RangeQuery
         implements Serializable
 {
+
+    public static <U extends Geometry, T extends Geometry> List<Double> LayerEstimate
+            (SpatialRDD<T> data, SpatialRDD<U> queryPolygons, QueryMethod queryMethod) {
+        FlatMapFunction2<Iterator<Tuple2<Integer, SpatialLocalIndex>>, Iterator<U>, Double> mapFunction;
+        mapFunction = new EstimateQuery<>(queryMethod);
+        return data.indexedPairRDD.zipPartitions(queryPolygons.spatialPartitionedRDD, mapFunction).collect();
+    }
+
+    public static <U extends Geometry, T extends Geometry> List<Double> LayerActual
+            (SpatialRDD<T> data, SpatialRDD<U> queryPolygons, SpatialLocalIndex.QueryMethod queryMethod) {
+        FlatMapFunction2<Iterator<Tuple2<Integer, SpatialLocalIndex>>, Iterator<U>, Double> mapFunction;
+        mapFunction = new ActualQuery<>(queryMethod);
+
+        return data.indexedPairRDD.zipPartitions(queryPolygons.spatialPartitionedRDD, mapFunction).collect();
+    }
+
+    public static <U extends Geometry, T extends Geometry> JavaPairRDD<String, Integer> SpatialJoinFilterRefine
+            (SpatialRDD<T> data, SpatialRDD<U> queryPolygons, boolean modified) {
+        FlatMapFunction2<Iterator<Tuple2<Integer, SpatialLocalIndex>>, Iterator<U>, Tuple2<String, Integer>> mapFunction;
+
+        if(modified) mapFunction = new SpatialJoinQuery<>(SpatialLocalIndex.QueryMethod.MODIFIED_FILTER_REFINE);
+        else mapFunction = new SpatialJoinQuery<>(SpatialLocalIndex.QueryMethod.FILTER_REFINE);
+
+        return data.indexedPairRDD.zipPartitions(queryPolygons.spatialPartitionedRDD, mapFunction)
+                .mapToPair(new PairFunction<Tuple2<String, Integer>, String, Integer>() {
+                    @Override
+                    public Tuple2<String, Integer> call(Tuple2<String, Integer> stringIntegerPair) throws Exception {
+                        return stringIntegerPair;
+                    }
+                }).aggregateByKey(0, (Function2<Integer, Integer, Integer>) Integer::sum, (Function2<Integer, Integer, Integer>) Integer::sum);
+
+    }
+
+    public static <U extends Geometry, T extends Geometry> JavaPairRDD<String, Integer> SpatialJoin
+            (SpatialRDD<T> data, SpatialRDD<U> queryPolygons) {
+        return data.spatialPartitionedRDD.zipPartitions(queryPolygons.spatialPartitionedRDD, new SpatialJoinNestedLoop<>())
+                .mapToPair(new PairFunction<Pair<String, Integer>, String, Integer>() {
+                    @Override
+                    public Tuple2<String, Integer> call(Pair<String, Integer> stringIntegerPair) throws Exception {
+                        return new Tuple2<>(stringIntegerPair.getKey(), stringIntegerPair.getValue());
+                    }
+                }).aggregateByKey(0, (Function2<Integer, Integer, Integer>) Integer::sum, (Function2<Integer, Integer, Integer>) Integer::sum);
+    }
+
+    public static <U extends Geometry, T extends Geometry> JavaPairRDD<String, Integer> SpatialJoinDecomposition
+            (SpatialRDD<T> data, SpatialRDD<U> queryPolygons)
+    {
+        FlatMapFunction2<Iterator<Tuple2<Integer, SpatialLocalIndex>>, Iterator<U>, Tuple2<String, Integer>> mapFunction;
+
+        mapFunction = new SpatialJoinQuery<>(SpatialLocalIndex.QueryMethod.DECOMPOSITION);
+
+        return data.indexedPairRDD.zipPartitions(queryPolygons.spatialPartitionedRDD, mapFunction)
+                .mapToPair(new PairFunction<Tuple2<String, Integer>, String, Integer>() {
+                    @Override
+                    public Tuple2<String, Integer> call(Tuple2<String, Integer> stringIntegerPair) throws Exception {
+                        return stringIntegerPair;
+                    }
+                }).aggregateByKey(0, (Function2<Integer, Integer, Integer>) Integer::sum, (Function2<Integer, Integer, Integer>) Integer::sum);
+
+    }
+
+    public static <U extends Geometry, T extends Geometry> JavaPairRDD<String, Integer> SpatialJoinOptimized
+            (SpatialRDD<T> data, SpatialRDD<U> queryPolygons, SpatialLocalIndex.EstimateLevel estimateLevel)
+    {
+        FlatMapFunction2<Iterator<Tuple2<Integer, SpatialLocalIndex>>, Iterator<U>, Tuple2<String, Integer>> mapFunction;
+
+        mapFunction = new SpatialJoinOptimized<>(estimateLevel);
+
+        return data.indexedPairRDD.zipPartitions(queryPolygons.spatialPartitionedRDD, mapFunction)
+                .mapToPair(new PairFunction<Tuple2<String, Integer>, String, Integer>() {
+                    @Override
+                    public Tuple2<String, Integer> call(Tuple2<String, Integer> stringIntegerPair) throws Exception {
+                        return stringIntegerPair;
+                    }
+                }).aggregateByKey(0, (Function2<Integer, Integer, Integer>) Integer::sum, (Function2<Integer, Integer, Integer>) Integer::sum);
+
+    }
+
 
     /**
      * Spatial range query. Return objects in SpatialRDD are covered/intersected by originalQueryGeometry

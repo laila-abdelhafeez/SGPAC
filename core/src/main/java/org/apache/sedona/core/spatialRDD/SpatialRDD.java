@@ -23,6 +23,12 @@ import org.apache.commons.lang.NullArgumentException;
 import org.apache.log4j.Logger;
 import org.apache.sedona.core.enums.GridType;
 import org.apache.sedona.core.enums.IndexType;
+import org.apache.sedona.core.spatialGlobalIndex.GlobalQuadTree;
+import org.apache.sedona.core.spatialGlobalIndex.GlobalSpatialIndex;
+import org.apache.sedona.core.spatialGlobalIndex.quadTree.QuadTree;
+import org.apache.sedona.core.spatialGlobalIndex.quadTree.QuadTreePartitioning;
+import org.apache.sedona.core.spatialLocalIndex.SpatialLocalIndex;
+import org.apache.sedona.core.spatialLocalIndex.indexBuilder.GridIndexBuilder;
 import org.apache.sedona.core.spatialPartitioning.FlatGridPartitioner;
 import org.apache.sedona.core.spatialPartitioning.KDBTree;
 import org.apache.sedona.core.spatialPartitioning.KDBTreePartitioner;
@@ -34,6 +40,7 @@ import org.apache.sedona.core.spatialRddTool.IndexBuilder;
 import org.apache.sedona.core.spatialRddTool.StatCalculator;
 import org.apache.sedona.core.utils.GeomUtils;
 import org.apache.sedona.core.utils.RDDSampleUtils;
+import org.apache.spark.api.java.JavaPairRDD;
 import org.apache.spark.api.java.JavaRDD;
 import org.apache.spark.api.java.function.FlatMapFunction;
 import org.apache.spark.api.java.function.Function;
@@ -670,4 +677,100 @@ public class SpatialRDD<T extends Geometry>
             return f;
         });
     }
+
+    private GlobalQuadTree globalIndex;
+
+    public List<Envelope> getGlobalIndexGrids() {
+        return globalIndex.getGrids();
+    }
+
+    public void quadSpatialPartitioning(int capacity)
+            throws Exception  {
+
+        int maxLevel = 10000;
+
+        if (this.boundaryEnvelope == null) {
+            throw new Exception("[AbstractSpatialRDD][spatialPartitioning] SpatialRDD boundary is null. Please call analyze() first.");
+        }
+        if (this.approximateTotalCount == -1) {
+            throw new Exception("[AbstractSpatialRDD][spatialPartitioning] SpatialRDD total count is unkown. Please call analyze() first.");
+        }
+
+
+        List<Envelope> data = this.rawSpatialRDD.map(new Function<T, Envelope>() {
+            @Override
+            public Envelope call(T geometry) throws Exception {
+                return geometry.getEnvelopeInternal();
+            }
+        }).collect();
+
+        logger.info("Spatial partitioning, collected data size = " + data.size() + ", capacity of node = " + capacity + ", max level of tree = " + maxLevel);
+
+        QuadTreePartitioning quadtreePartitioning = new QuadTreePartitioning(data, boundaryEnvelope, capacity, maxLevel);
+        QuadTree quadTree = quadtreePartitioning.getPartitionTree();
+        globalIndex = new GlobalQuadTree(quadTree);
+        spatialPartitionedRDD = createGlobalIndex(globalIndex);
+    }
+
+    public GlobalSpatialIndex getGlobalIndex() { return globalIndex; }
+
+    public JavaRDD<T> createGlobalIndex(GlobalSpatialIndex globalSpatialIndex)
+    {
+        return this.rawSpatialRDD.flatMapToPair(
+                new PairFlatMapFunction<T, Integer, T>()
+                {
+                    @Override
+                    public Iterator<Tuple2<Integer, T>> call(T spatialObject)
+                            throws Exception
+                    {
+                        return globalSpatialIndex.placeObject(spatialObject);
+                    }
+                }
+        ).partitionBy(globalSpatialIndex)
+                .mapPartitions(new FlatMapFunction<Iterator<Tuple2<Integer, T>>, T>()
+                {
+                    @Override
+                    public Iterator<T> call(final Iterator<Tuple2<Integer, T>> tuple2Iterator)
+                            throws Exception
+                    {
+                        return new Iterator<T>()
+                        {
+                            @Override
+                            public boolean hasNext()
+                            {
+                                return tuple2Iterator.hasNext();
+                            }
+
+                            @Override
+                            public T next()
+                            {
+                                return tuple2Iterator.next()._2();
+                            }
+
+                            @Override
+                            public void remove()
+                            {
+                                throw new UnsupportedOperationException();
+                            }
+                        };
+                    }
+                }, true);
+    }
+
+    public JavaPairRDD<Integer, SpatialLocalIndex> indexedPairRDD;
+
+    public void buildGridIndex(List<Envelope> grids, int numXGridCells, int numYGridCells, boolean buildIndexOnSpatialPartitionedRDD) throws Exception{
+        if (buildIndexOnSpatialPartitionedRDD == false) {
+            //This index is built on top of unpartitioned SRDD
+            throw new Exception("[AbstractSpatialRDD][buildIndex] spatialPartitionedRDD is null. Please do spatial partitioning before build index.");
+        }
+        else {
+            if (this.spatialPartitionedRDD == null) {
+                throw new Exception("[AbstractSpatialRDD][buildIndex] spatialPartitionedRDD is null. Please do spatial partitioning before build index.");
+            }
+
+            this.indexedPairRDD = spatialPartitionedRDD.mapPartitionsToPair(new GridIndexBuilder(numXGridCells, numYGridCells, grids));
+        }
+    }
+
 }

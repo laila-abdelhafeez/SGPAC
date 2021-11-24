@@ -4,7 +4,34 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="8aba294c-75af-46ff-8e23-759482ce46de" name="Default Changelist" comment="" />
+    <list default="true" id="8aba294c-75af-46ff-8e23-759482ce46de" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/SGPAC.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialGlobalIndex/GlobalQuadTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialGlobalIndex/GlobalRTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialGlobalIndex/GlobalSpatialIndex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialGlobalIndex/quadTree/QuadElement.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialGlobalIndex/quadTree/QuadTree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialGlobalIndex/quadTree/QuadTreePartitioning.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/IndexBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/SpatialLocalIndex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/gridIndex/GridCell.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/gridIndex/GridCells.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/gridIndex/GridLocalIndex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/indexBuilder/GridIndexBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/indexBuilder/QuadIndexBuilder.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/quadTree/QuadLocalIndex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/quadTree/QuadNode.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/rangeQuery/ActualQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/rangeQuery/EstimateQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/rangeQuery/RangeQuery.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/rangeQuery/SpatialJoinNestedLoop.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/rangeQuery/SpatialJoinOptimized.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/rangeQuery/SpatialJoinQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/RangeQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/RangeQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialRDD/SpatialRDD.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialRDD/SpatialRDD.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sedona-parent.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/sedona-parent.ipr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/sedona-parent.iws" beforeDir="false" afterPath="$PROJECT_DIR$/sedona-parent.iws" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -224,6 +251,9 @@
     <option name="version" value="1" />
   </component>
   <component name="ProjectId" id="21Lke4gLIrOjgsVdn8BP4UMfPC0" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
   <component name="ProjectViewSettings">
     <navigator currentView="ProjectPane" flattenPackages="false" showMembers="false" showStructure="false" autoscrollToSource="false" splitterProportion="0.5" />
     <view id="ProjectPane">
@@ -237,6 +267,7 @@
     <option name="showLibraryContents" value="true" />
   </component>
   <component name="PropertiesComponent">
+    <property name="ASKED_ADD_EXTERNAL_FILES" value="true" />
     <property name="GoToClass.includeLibraries" value="false" />
     <property name="GoToClass.toSaveIncludeLibraries" value="false" />
     <property name="GoToFile.includeJavaFiles" value="false" />
@@ -245,7 +276,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../GeoSpark" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.20023012" />
@@ -359,6 +390,20 @@
       <window_info id="EJB" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="3" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="docked" type="docked" visible="false" weight="0.25" order="5" />
     </layout>
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
   </component>
   <component name="VssConfiguration">
     <CheckoutOptions>
