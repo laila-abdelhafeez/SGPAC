@@ -14,17 +14,21 @@
         <sourceTestOutputDir name="target/generated-test-sources/test-annotations" />
         <outputRelativeToContentRoot value="true" />
         <module name="sedona-core-3.0_2.12" />
-        <module name="sedona-viz-3.0_2.12" />
         <module name="sedona-python-adapter-3.0_2.12" />
         <module name="sedona-sql-3.0_2.12" />
+        <module name="sedona-viz-3.0_2.12" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>
+      <module name="core" target="1.7" />
+      <module name="python-adapter" target="1.7" />
       <module name="sedona-core-3.0_2.12" target="1.7" />
       <module name="sedona-parent" target="1.8" />
       <module name="sedona-python-adapter-3.0_2.12" target="1.7" />
       <module name="sedona-sql-3.0_2.12" target="1.7" />
       <module name="sedona-viz-3.0_2.12" target="1.7" />
+      <module name="sql" target="1.7" />
+      <module name="viz" target="1.7" />
     </bytecodeTargetLevel>
   </component>
   <component name="Encoding">
@@ -87,6 +91,14 @@
       <list>
         <option value="$PROJECT_DIR$/pom.xml" />
       </list>
+    </option>
+    <option name="ignoredFiles">
+      <set>
+        <option value="$PROJECT_DIR$/core/pom.xml" />
+        <option value="$PROJECT_DIR$/python-adapter/pom.xml" />
+        <option value="$PROJECT_DIR$/sql/pom.xml" />
+        <option value="$PROJECT_DIR$/viz/pom.xml" />
+      </set>
     </option>
   </component>
   <component name="Palette2">
@@ -264,6 +276,13 @@
       <option name="name" value="OSGeo Release Repository" />
       <option name="url" value="https://repo.osgeo.org/repository/release/" />
     </remote-repository>
+  </component>
+  <component name="RunConfigurationProducerService">
+    <option name="ignoredProducers">
+      <set>
+        <option value="com.android.tools.idea.compose.preview.runconfiguration.ComposePreviewRunConfigurationProducer" />
+      </set>
+    </option>
   </component>
   <component name="ScalaCompilerConfiguration">
     <profile name="Maven 1" modules="sedona-parent">
@@ -1496,6 +1515,17 @@
       </JAVADOC>
       <SOURCES>
         <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jets3t/jets3t/0.9.0/jets3t-0.9.0-sources.jar!/" />
+      </SOURCES>
+    </library>
+    <library name="Maven: net.java.dev.jsr-275:jsr-275:1.0-beta-2">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jsr-275/jsr-275/1.0-beta-2/jsr-275-1.0-beta-2.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jsr-275/jsr-275/1.0-beta-2/jsr-275-1.0-beta-2-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/net/java/dev/jsr-275/jsr-275/1.0-beta-2/jsr-275-1.0-beta-2-sources.jar!/" />
       </SOURCES>
     </library>
     <library name="Maven: net.jcip:jcip-annotations:1.0">
@@ -2774,6 +2804,17 @@
         <root url="jar://$MAVEN_REPOSITORY$/org/objenesis/objenesis/2.5.1/objenesis-2.5.1-sources.jar!/" />
       </SOURCES>
     </library>
+    <library name="Maven: org.opengis:geoapi:2.2.0">
+      <CLASSES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/opengis/geoapi/2.2.0/geoapi-2.2.0.jar!/" />
+      </CLASSES>
+      <JAVADOC>
+        <root url="jar://$MAVEN_REPOSITORY$/org/opengis/geoapi/2.2.0/geoapi-2.2.0-javadoc.jar!/" />
+      </JAVADOC>
+      <SOURCES>
+        <root url="jar://$MAVEN_REPOSITORY$/org/opengis/geoapi/2.2.0/geoapi-2.2.0-sources.jar!/" />
+      </SOURCES>
+    </library>
     <library name="Maven: org.roaringbitmap:RoaringBitmap:0.9.0">
       <CLASSES>
         <root url="jar://$MAVEN_REPOSITORY$/org/roaringbitmap/RoaringBitmap/0.9.0/RoaringBitmap-0.9.0.jar!/" />
@@ -2857,6 +2898,7 @@
           <root url="file://$MAVEN_REPOSITORY$/org/scala-lang/scala-compiler/2.12.15/scala-compiler-2.12.15.jar" />
           <root url="file://$MAVEN_REPOSITORY$/org/scala-lang/scala-library/2.12.15/scala-library-2.12.15.jar" />
           <root url="file://$MAVEN_REPOSITORY$/org/scala-lang/scala-reflect/2.12.15/scala-reflect-2.12.15.jar" />
+          <root url="file://$MAVEN_REPOSITORY$/org/scala-lang/modules/scala-xml_2.12/1.0.6/scala-xml_2.12-1.0.6.jar" />
         </compiler-classpath>
       </properties>
       <CLASSES>

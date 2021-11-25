@@ -88,23 +88,23 @@
             <groupId>org.wololo</groupId>
             <artifactId>jts2geojson</artifactId>
             <version>${jts2geojson.version}</version>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.locationtech.jts</groupId>
-                    <artifactId>jts-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
-            <scope>${dependency.scope}</scope>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.locationtech.jts</groupId>-->
+<!--                    <artifactId>jts-core</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                    <artifactId>*</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
+<!--            <scope>${dependency.scope}</scope>-->
         </dependency>
         <dependency>
             <groupId>org.locationtech.jts</groupId>
             <artifactId>jts-core</artifactId>
             <version>${jts.version}</version>
-            <scope>${dependency.scope}</scope>
+<!--            <scope>${dependency.scope}</scope>-->
         </dependency>
         <dependency>
             <groupId>org.datasyslab</groupId>
@@ -122,16 +122,16 @@
             <artifactId>gt-main</artifactId>
             <version>${geotools.version}</version>
             <scope>${dependency.scope}</scope>
-            <exclusions>
-                <exclusion>
-                    <groupId>org.locationtech.jts</groupId>
-                    <artifactId>jts-core</artifactId>
-                </exclusion>
-                <exclusion>
-                    <groupId>com.fasterxml.jackson.core</groupId>
-                    <artifactId>*</artifactId>
-                </exclusion>
-            </exclusions>
+<!--            <exclusions>-->
+<!--                <exclusion>-->
+<!--                    <groupId>org.locationtech.jts</groupId>-->
+<!--                    <artifactId>jts-core</artifactId>-->
+<!--                </exclusion>-->
+<!--                <exclusion>-->
+<!--                    <groupId>com.fasterxml.jackson.core</groupId>-->
+<!--                    <artifactId>*</artifactId>-->
+<!--                </exclusion>-->
+<!--            </exclusions>-->
         </dependency>
         <!--for CRS transformation-->
         <dependency>
@@ -241,6 +241,12 @@
             <artifactId>scala-compiler</artifactId>
             <version>${scala.version}</version>
             <scope>test</scope>
+        </dependency>
+        <!-- https://mvnrepository.com/artifact/org.opengis/geoapi -->
+        <dependency>
+            <groupId>org.opengis</groupId>
+            <artifactId>geoapi</artifactId>
+            <version>2.2.0</version>
         </dependency>
     </dependencies>
     <repositories>
