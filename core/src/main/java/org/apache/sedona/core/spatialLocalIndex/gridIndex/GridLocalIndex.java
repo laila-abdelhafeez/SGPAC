@@ -18,7 +18,7 @@ public class GridLocalIndex implements SpatialLocalIndex {
     private Envelope gridBoundary;
     final private int numXCells, numYCells;
     int length, height;
-    boolean countsAvailable = false;
+    private boolean countsAvailable = false;
     private HashMap<Pair<Integer, Integer>, Integer> counts = new HashMap<>();
 
     public GridLocalIndex(int numXCells, int numYCells) {

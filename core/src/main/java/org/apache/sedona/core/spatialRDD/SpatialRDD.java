@@ -29,6 +29,7 @@ import org.apache.sedona.core.spatialGlobalIndex.quadTree.QuadTree;
 import org.apache.sedona.core.spatialGlobalIndex.quadTree.QuadTreePartitioning;
 import org.apache.sedona.core.spatialLocalIndex.SpatialLocalIndex;
 import org.apache.sedona.core.spatialLocalIndex.indexBuilder.GridIndexBuilder;
+import org.apache.sedona.core.spatialLocalIndex.indexBuilder.RIndexBuilder;
 import org.apache.sedona.core.spatialPartitioning.FlatGridPartitioner;
 import org.apache.sedona.core.spatialPartitioning.KDBTree;
 import org.apache.sedona.core.spatialPartitioning.KDBTreePartitioner;
@@ -773,4 +774,18 @@ public class SpatialRDD<T extends Geometry>
         }
     }
 
+
+    public void buildRIndex(List<Envelope> grids, int capacity, boolean buildIndexOnSpatialPartitionedRDD) throws Exception{
+        if (buildIndexOnSpatialPartitionedRDD == false) {
+            //This index is built on top of unpartitioned SRDD
+            throw new Exception("[AbstractSpatialRDD][buildIndex] spatialPartitionedRDD is null. Please do spatial partitioning before build index.");
+        }
+        else {
+            if (this.spatialPartitionedRDD == null) {
+                throw new Exception("[AbstractSpatialRDD][buildIndex] spatialPartitionedRDD is null. Please do spatial partitioning before build index.");
+            }
+
+            this.indexedPairRDD = spatialPartitionedRDD.mapPartitionsToPair(new RIndexBuilder(capacity, grids));
+        }
+    }
 }

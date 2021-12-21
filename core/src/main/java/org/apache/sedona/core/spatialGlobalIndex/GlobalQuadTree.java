@@ -56,9 +56,6 @@ public class GlobalQuadTree
             throws Exception
     {
         Objects.requireNonNull(spatialObject, "spatialObject");
-        logger.info("processing: " + spatialObject.getUserData());
-
-
         final Point point = spatialObject instanceof Point ? (Point) spatialObject : null;
         final Set<Tuple2<Integer, T>> result = new HashSet<>();
         final Envelope envelope = spatialObject.getEnvelopeInternal();

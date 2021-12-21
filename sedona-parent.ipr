@@ -15,8 +15,8 @@
         <outputRelativeToContentRoot value="true" />
         <module name="sedona-core-3.0_2.12" />
         <module name="sedona-python-adapter-3.0_2.12" />
-        <module name="sedona-sql-3.0_2.12" />
         <module name="sedona-viz-3.0_2.12" />
+        <module name="sedona-sql-3.0_2.12" />
       </profile>
     </annotationProcessing>
     <bytecodeTargetLevel>

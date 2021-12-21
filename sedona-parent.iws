@@ -5,9 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="8aba294c-75af-46ff-8e23-759482ce46de" name="Default Changelist" comment="">
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/RTree/MSTRtree.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/RTree/RTeeIndex.java" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/indexBuilder/RIndexBuilder.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.gitignore" beforeDir="false" afterPath="$PROJECT_DIR$/.gitignore" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/SGPAC.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/SGPAC.java" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/pom.xml" beforeDir="false" afterPath="$PROJECT_DIR$/pom.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/sedona-parent.ipr" beforeDir="false" afterPath="$PROJECT_DIR$/sedona-parent.ipr" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialGlobalIndex/GlobalQuadTree.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialGlobalIndex/GlobalQuadTree.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/SpatialLocalIndex.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialLocalIndex/SpatialLocalIndex.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/RangeQuery.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialOperator/RangeQuery.java" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialRDD/SpatialRDD.java" beforeDir="false" afterPath="$PROJECT_DIR$/core/src/main/java/org/apache/sedona/core/spatialRDD/SpatialRDD.java" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/sedona-parent.iws" beforeDir="false" afterPath="$PROJECT_DIR$/sedona-parent.iws" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -176,8 +182,23 @@
     <option name="IS_AUTOSCROLL_TO_SOURCE" value="false" />
     <option name="HIDE_WARNINGS" value="false" />
   </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Class" />
+      </list>
+    </option>
+  </component>
   <component name="Git.Settings">
     <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitSEFilterConfiguration">
+    <file-type-list>
+      <filtered-out-file-type name="LOCAL_BRANCH" />
+      <filtered-out-file-type name="REMOTE_BRANCH" />
+      <filtered-out-file-type name="TAG" />
+      <filtered-out-file-type name="COMMIT_BY_MESSAGE" />
+    </file-type-list>
   </component>
   <component name="HierarchyBrowserManager">
     <option name="SHOW_PACKAGES" value="false" />
@@ -254,7 +275,7 @@
     <property name="MemberChooser.sorted" value="false" />
     <property name="RunOnceActivity.OpenProjectViewOnStart" value="true" />
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/../Polygonize" />
     <property name="project.structure.last.edited" value="Modules" />
     <property name="project.structure.proportion" value="0.15" />
     <property name="project.structure.side.proportion" value="0.20023012" />

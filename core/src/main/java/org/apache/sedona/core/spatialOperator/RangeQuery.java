@@ -128,6 +128,40 @@ public class RangeQuery
 
     }
 
+    public static <U extends Geometry, T extends Geometry> JavaPairRDD<String, Integer> indexQueryPolygon
+            (SpatialRDD<T> data, SpatialRDD<U> queryPolygons)
+    {
+        FlatMapFunction2<Iterator<Tuple2<Integer, SpatialLocalIndex>>, Iterator<U>, Tuple2<String, Integer>> mapFunction;
+
+        mapFunction = new SpatialJoinQuery<>(QueryMethod.INDEX_QUERY);
+
+        return data.indexedPairRDD.zipPartitions(queryPolygons.spatialPartitionedRDD, mapFunction)
+                .mapToPair(new PairFunction<Tuple2<String, Integer>, String, Integer>() {
+                    @Override
+                    public Tuple2<String, Integer> call(Tuple2<String, Integer> stringIntegerPair) throws Exception {
+                        return stringIntegerPair;
+                    }
+                }).aggregateByKey(0, (Function2<Integer, Integer, Integer>) Integer::sum, (Function2<Integer, Integer, Integer>) Integer::sum);
+
+    }
+
+    public static <U extends Geometry, T extends Geometry> JavaPairRDD<String, Integer> testAll
+            (SpatialRDD<T> data, SpatialRDD<U> queryPolygons)
+    {
+        FlatMapFunction2<Iterator<Tuple2<Integer, SpatialLocalIndex>>, Iterator<U>, Tuple2<String, Integer>> mapFunction;
+
+        mapFunction = new SpatialJoinQuery<>(QueryMethod.ALL);
+
+        return data.indexedPairRDD.zipPartitions(queryPolygons.spatialPartitionedRDD, mapFunction)
+                .mapToPair(new PairFunction<Tuple2<String, Integer>, String, Integer>() {
+                    @Override
+                    public Tuple2<String, Integer> call(Tuple2<String, Integer> stringIntegerPair) throws Exception {
+                        return stringIntegerPair;
+                    }
+                }).aggregateByKey(0, (Function2<Integer, Integer, Integer>) Integer::sum, (Function2<Integer, Integer, Integer>) Integer::sum);
+
+    }
+
 
     /**
      * Spatial range query. Return objects in SpatialRDD are covered/intersected by originalQueryGeometry
